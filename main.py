@@ -29,13 +29,46 @@ for i in range(5):
   )
   puck_list.append(p)
 
-# pacman global variables:
-pacman_x = 160
-pacman_y = 150
-pacman_size = 75
-pacman_direction = 'right'
-pacman_state = 'closing'
-pacman_mouth = 0
+class Pacman:
+  x = 160
+  y = 150
+  size = 75
+  direction = 'right'
+  state = 'closing'
+  mouth = 0
+
+  def update(self):
+    if(self.state == 'opening'):
+      if(self.mouth < p5.radians(30)): 
+        self.mouth += 0.01
+      else: # reverse to closing mouth direction
+        self.state = 'closing'
+    elif(self.state == 'closing'):
+      if(self.mouth > 0): # closing mouth
+        self.mouth -= 0.01
+      else: # reverse to opening mouth direction
+        self.state = 'opening'
+
+  def draw(self):
+    p5.push()
+    # move pacman:
+    p5.translate(self.x, self.y)
+    # rotate pacman:
+    if(self.direction == 'right'):
+      p5.rotate(p5.radians(0))
+    elif(self.direction == 'left'):
+      p5.rotate(p5.radians(180))
+    elif(self.direction == 'up'):
+      p5.rotate(p5.radians(270))
+    elif(self.direction == 'down'):
+      p5.rotate(p5.radians(90))
+    p5.fill(255, 255, 0) # yellow fill
+    p5.arc(0, 0, self.size, self.size, \
+           self.mouth, p5.TWO_PI - self.mouth)
+    p5.pop()
+
+# instantiate Pacman object:
+pacman = Pacman()
 
 # ghost images:
 ghost_img1 = p5.loadImage('ghost_1.png')
@@ -63,8 +96,8 @@ def draw():
     p = puck_list[i]
     p.draw()
   # draw pacman:
-  update_pacman()
-  draw_pacman()
+  pacman.update()
+  pacman.draw()
   # draw ghost:
   p5.image(ghost_img1, 60, 150)
   
@@ -79,39 +112,6 @@ def draw_puck():
   p5.fill(255, 255, 0)
   p5.pop()
 
-def update_pacman():
-  global pacman_state
-  global pacman_mouth
-  if(pacman_state == 'opening'):
-    if(pacman_mouth < p5.radians(30)): 
-      pacman_mouth += 0.01
-    else: # reverse to closing mouth direction
-      pacman_state = 'closing'
-  elif(pacman_state == 'closing'):
-    if(pacman_mouth > 0): # closing mouth
-      pacman_mouth -= 0.01
-    else: # reverse to opening mouth direction
-      pacman_state = 'opening'
-      
-def draw_pacman():
-  global pacman_x, pacman_y 
-  p5.push()
-  # move pacman:
-  p5.translate(pacman_x, pacman_y)
-  # rotate pacman:
-  if(pacman_direction == 'right'):
-    p5.rotate(p5.radians(0))
-  elif(pacman_direction == 'left'):
-    p5.rotate(p5.radians(180))
-  elif(pacman_direction == 'up'):
-    p5.rotate(p5.radians(270))
-  elif(pacman_direction == 'down'):
-    p5.rotate(p5.radians(90))
-  p5.fill(255, 255, 0) # yellow fill
-  p5.arc(0, 0, pacman_size, pacman_size, \
-         pacman_mouth, p5.TWO_PI - pacman_mouth)
-  p5.pop()
-  
 def keyPressed(event):
   #print('key pressed.. ' + p5.key)
   global pacman_direction
