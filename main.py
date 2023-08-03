@@ -17,6 +17,14 @@ class Puck:
     p5.fill(255, 255, 0)
     p5.pop()
 
+class PowerPuck(Puck):
+  def draw(self):
+    p5.push()
+    p5.translate(self.x, self.y)
+    p5.rect(0, 0, self.size, self.size)
+    p5.fill(255, 255, 0)
+    p5.pop()
+
 puck_list = []
 # puck_list.append(puck1)
 # puck_list.append(puck2)
@@ -28,6 +36,12 @@ for i in range(5):
     y = int(p5.random(50, 250))
   )
   puck_list.append(p)
+
+puck6 = PowerPuck(
+  x = int(p5.random(50, 250)),
+  y = int(p5.random(50, 250))
+)
+puck_list.append(puck6)
 
 class Pacman:
   x = 160
