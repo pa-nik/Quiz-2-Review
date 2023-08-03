@@ -49,6 +49,27 @@ class Pacman:
       else: # reverse to opening mouth direction
         self.state = 'opening'
 
+    if(self.direction == 'right'):
+      if(self.x < p5.width + self.size/2):
+        self.x += 0.5
+      else:
+        self.x = -self.size/2
+    elif(self.direction == 'left'):
+      if(self.x > -self.size/2):
+        self.x -= 0.5
+      else:
+        self.x = p5.width + self.size/2
+    elif(self.direction == 'up'):
+      if(self.y > -self.size/2):
+        self.y -= 0.5
+      else:
+        self.y = p5.height + self.size/2
+    elif(self.direction == 'down'):
+      if(self.y < p5.height + self.size/2):
+        self.y += 0.5
+      else:
+        self.y = -self.size/2
+
   def draw(self):
     p5.push()
     # move pacman:
