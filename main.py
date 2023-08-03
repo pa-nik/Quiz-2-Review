@@ -107,9 +107,26 @@ class Pacman:
 # instantiate Pacman object:
 pacman = Pacman()
 
-# ghost images:
-ghost_img1 = p5.loadImage('ghost_1.png')
-ghost_img2 = p5.loadImage('ghost_2.png')
+class Ghost:
+  def __init__(self, x=50, y=150):
+    self.x = x
+    self.y = y
+    self.img1 = p5.loadImage('ghost_1.png')
+    self.img2 = p5.loadImage('ghost_2.png')
+
+  def update(self):
+    if(self.y < p5.height + self.img1.height/2):
+      self.y += 0.5
+    else:
+      self.y = -self.img1.height/2
+    
+  def draw(self):
+    if(p5.millis() % 1000 < 500):
+      p5.image(self.img1, self.x, self.y)
+    else:
+      p5.image(self.img2, self.x, self.y)
+
+ghost = Ghost(x = 50, y = 50)
 
 # load font:
 font = p5.loadFont('PressStart2P.otf')
@@ -158,16 +175,15 @@ def draw():
     # draw pacman:
     pacman.update()
     pacman.draw()
-    # draw ghost:
-    p5.image(ghost_img1, 60, 150)
-  
+    
+    ghost.update()
+    ghost.draw()
 
-def draw_puck():
-  p5.push()
-  p5.translate(puck_x, puck_y)
-  p5.ellipse(0, 0, puck_size, puck_size)
-  p5.fill(255, 255, 0)
-  p5.pop()
+    d = p5.dist(pacman.x, pacman.y, ghost.x, ghost.y)
+    if(d < 50):
+      print('ghost catches pacman!')
+      program_state = 'LOOSE'
+  
 
 def keyPressed(event):
   #print('key pressed.. ' + p5.key)
