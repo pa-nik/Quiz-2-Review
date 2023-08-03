@@ -1,10 +1,20 @@
 import js
 p5 = js.window
 
-# puck global variables:
-puck_x = 250
-puck_y = 150
-puck_size = 25
+class Puck:
+  x = 250
+  y = 150
+  size = 25
+
+  def draw(self):
+    p5.push()
+    p5.translate(self.x, self.y)
+    p5.ellipse(0, 0, self.size, self.size)
+    p5.fill(255, 255, 0)
+    p5.pop()
+
+# instantiate a Puck object:
+puck1 = Puck()
 
 # pacman global variables:
 pacman_x = 160
@@ -36,7 +46,7 @@ def setup():
 def draw():
   p5.background(0)   
   # draw puck:
-  draw_puck()
+  puck1.draw()
   # draw pacman:
   update_pacman()
   draw_pacman()
