@@ -114,15 +114,15 @@ def draw_puck():
 
 def keyPressed(event):
   #print('key pressed.. ' + p5.key)
-  global pacman_direction
+  global pacman
   if(p5.keyCode == p5.UP_ARROW):
-    pacman_direction = 'up'
+    pacman.direction = 'up'
   elif(p5.keyCode == p5.DOWN_ARROW):
-    pacman_direction = 'down'
+    pacman.direction = 'down'
   elif(p5.keyCode == p5.LEFT_ARROW):
-    pacman_direction = 'left'
+    pacman.direction = 'left'
   elif(p5.keyCode == p5.RIGHT_ARROW):
-    pacman_direction = 'right'
+    pacman.direction = 'right'
 
 def keyReleased(event):
   pass
