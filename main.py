@@ -1,6 +1,8 @@
 import js
 p5 = js.window
 
+program_state = 'START'
+
 class Puck:
   x = 250
   y = 150
@@ -126,27 +128,39 @@ def setup():
 
 def draw():
   p5.background(0)   
-  # draw pucks:
-  i = 0
-  while(i < len(puck_list)):
-    p = puck_list[i]
-    d = p5.dist(pacman.x, pacman.y, p.x, p.y)
-    if(d < pacman.size/2):
-      print('eat puck!')
-      puck_list.pop(i)
-    else:
-      p.draw()
-    i += 1
-  
-  # draw pacman:
-  pacman.update()
-  pacman.draw()
-  # draw ghost:
-  p5.image(ghost_img1, 60, 150)
-  
+  global program_state
   if(program_state == 'START'):
     p5.fill(255, 255, 0)
     p5.text('Click to Start..', 20, 40)
+  elif(program_state == 'WIN'):
+    p5.fill(255, 255, 0)
+    p5.text('You Win!', 20, 40)
+  elif(program_state == 'LOOSE'):
+    p5.fill(255, 255, 0)
+    p5.text('You Loose!', 20, 40)
+  elif(program_state == 'PLAY'):
+    # draw pucks:
+    i = 0
+    while(i < len(puck_list)):
+      p = puck_list[i]
+      d = p5.dist(pacman.x, pacman.y, p.x, p.y)
+      if(d < pacman.size/2):
+        print('eat puck!')
+        puck_list.pop(i)
+        # check if all pucks are gone:
+        if(len(puck_list) == 0):
+          print('all the pucks gone!')
+          program_state = 'WIN'
+      else:
+        p.draw()
+      i += 1
+    
+    # draw pacman:
+    pacman.update()
+    pacman.draw()
+    # draw ghost:
+    p5.image(ghost_img1, 60, 150)
+  
 
 def draw_puck():
   p5.push()
@@ -171,7 +185,9 @@ def keyReleased(event):
   pass
   
 def mousePressed(event):
-  pass
+  global program_state
+  if(program_state == 'START'):
+    program_state = 'PLAY'
 
 def mouseReleased(event):
   pass
