@@ -113,9 +113,17 @@ def setup():
 def draw():
   p5.background(0)   
   # draw pucks:
-  for i in range(len(puck_list)):
+  i = 0
+  while(i < len(puck_list)):
     p = puck_list[i]
-    p.draw()
+    d = p5.dist(pacman.x, pacman.y, p.x, p.y)
+    if(d < pacman.size/2):
+      print('eat puck!')
+      puck_list.pop(i)
+    else:
+      p.draw()
+    i += 1
+  
   # draw pacman:
   pacman.update()
   pacman.draw()
