@@ -6,6 +6,10 @@ class Puck:
   y = 150
   size = 25
 
+  def __init__(self, x=0, y=0):
+    self.x = x
+    self.y = y
+
   def draw(self):
     p5.push()
     p5.translate(self.x, self.y)
@@ -14,7 +18,14 @@ class Puck:
     p5.pop()
 
 # instantiate a Puck object:
-puck1 = Puck()
+puck1 = Puck(x = 250, y = 150)
+puck2 = Puck(x = 150, y = 250)
+puck3 = Puck(x = 50, y = 200)
+puck4 = Puck(x = 220, y = 220)
+puck5 = Puck(
+  x = int(p5.random(50, 250)),
+  y = int(p5.random(50, 250))
+)
 
 # pacman global variables:
 pacman_x = 160
@@ -47,6 +58,10 @@ def draw():
   p5.background(0)   
   # draw puck:
   puck1.draw()
+  puck2.draw()
+  puck3.draw()
+  puck4.draw()
+  puck5.draw()
   # draw pacman:
   update_pacman()
   draw_pacman()
